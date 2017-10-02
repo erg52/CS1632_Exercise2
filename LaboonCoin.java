@@ -82,8 +82,8 @@ public class LaboonCoin {
     public int hash(String data) {
         // TODO - IMPLEMENT LABOONHASH
         int n = 10000000;
-        for(int i=0; i< data.length; i++){
-            n = n * (int)data.charAt(i) + (int)i;
+        for(int i=0; i< data.length(); i++){
+            n = n * (int)data.charAt(i) + (int)data.charAt(i);
         }
         return n;
     }
@@ -105,11 +105,12 @@ public class LaboonCoin {
     
     public boolean validHash(int difficulty, int hash) {
         // TODO - CHECK FOR VALID HASHES
-        int check = Integer.parseInt("FFFFFFFF",16) >>> (4*difficulty);
-        if(hash <= check){
-            return true;
+        String temp = Integer.toHexString(hash);
+        if(temp.length() > (8-difficulty)){
+            return false;
         }
-	    return false;
+        return true;
+        
     }
 
     /**
@@ -139,7 +140,7 @@ public class LaboonCoin {
 	    // System.out.print("Trying: " + toTry + ".. ");
 	    
 	    hashVal = hash(toTry);
-	    System.out.println("hash: " + String.format("%08x", hashVal));
+	    // System.out.println("hash: " + String.format("%08x", hashVal));
 	    if (validHash(difficulty, hashVal)) {
 		foundNonce = true;
 	    } else {
